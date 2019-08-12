@@ -8,7 +8,7 @@
                                 author: "Author",
                                 date: "Date",
                               });
-  //api.run("this.scrape_reviews", { url: env.get("url") });
+  api.run("this.scrape_reviews", { url: env.get("url") });
   let reviews = api.run("this.get_reviews");
   for (let i = 0; i < reviews.length; i++){
       api.run("this.sheets_copy", {
