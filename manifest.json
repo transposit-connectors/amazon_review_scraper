@@ -4,9 +4,6 @@
       "dependencies": [{
         "name": "transposit/apify_v2:v1.*.*",
         "alias": "apify_v2"
-      }, {
-        "name": "transposit/google_sheets:v1.*.*",
-        "alias": "google_sheets"
       }],
       "operations": [{
         "id": "hello_world",
