@@ -9,13 +9,47 @@
         "alias": "google_sheets"
       }],
       "operations": [{
-        "id": "hello_world",
-        "description": "Returns \"Hello, world\" in different languages",
+        "id": "get_reviews",
+        "tql": {
+          "tql": "SELECT rating, title, content, author, date FROM apify_v2.get_items_in_task_last_run_dataset\n  WHERE actorTaskId=\"wbW84AN7b8AtEFtEZ\"\n  AND status='SUCCEEDED'\n  "
+        }
+      }, {
+        "id": "scrape_reviews",
+        "tql": {
+          "parameters": [{
+            "name": "url",
+            "description": "The amazon product review url to start at",
+            "type": "STRING"
+          }],
+          "tql": "SELECT * FROM apify_v2.sync_run_task_with_input\n  WHERE actorTaskId=\"wbW84AN7b8AtEFtEZ\"\n  AND $body=(SELECT {\n  \"startUrls\": [\n    {\n      \"url\": @url\t\t-- Enter this in environment variables.\n    }\n  ]\n})\n"
+        }
+      }, {
+        "id": "run_tasks",
         "function": {
-          "js": "hello_world.js"
-        },
-        "access": {
-          "requireUser": true
+          "js": "run_tasks.js"
+        }
+      }, {
+        "id": "sheets_copy",
+        "tql": {
+          "parameters": [{
+            "name": "values",
+            "type": "STRING"
+          }, {
+            "name": "sheetId",
+            "description": "the id of the google sheet",
+            "type": "STRING"
+          }],
+          "tql": "SELECT * FROM google_sheets.append_sheet_values\n  WHERE valueInputOption='RAW'\n  AND range='Sheet1'\n  AND spreadsheetId=@sheetId\n  AND $body=(SELECT {\n    'values' : [ [@rating, @title, @content, @author, @date ] ],\n    'range' : 'Sheet1'\n  })\n"
+        }
+      }, {
+        "id": "create_sheet",
+        "tql": {
+          "parameters": [{
+            "name": "name",
+            "description": "The name of the spreadsheet",
+            "type": "STRING"
+          }],
+          "tql": "SELECT spreadsheetId, spreadsheetUrl FROM google_sheets.create_sheet\n  WHERE $body.properties.title=@name\n\n/*\n * For sample code and reference material, visit\n * https://www.transposit.com/docs/get-started/sql-quickstart\n */"
         }
       }],
       "javascriptAPIVersion": "3",

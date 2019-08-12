@@ -1,0 +1,21 @@
+(params) => {
+  let newSheet = api.run("this.create_sheet", {name: `Reviews ${env.get("url")}`});
+  api.run("this.scrape_reviews", { url: env.get("url") });
+  let reviews = api.run("this.get_reviews");
+  for (let i = 0; i < reviews.length; i++){
+      api.run("this.sheets_copy", {
+        							sheetId: newSheet.spreadsheetId,
+        							rating: reviews[i].rating,
+        							title: reviews[i].title,
+        							content: reviews[i].content,
+        							author: reviews[i].author,
+        							date: reviews[i].date,
+      							  });
+  }
+  return newSheet.spreadsheetUrl;
+}
+
+/*
+ * For sample code and reference material, visit
+ * https://www.transposit.com/docs/references/js-operations
+ */
