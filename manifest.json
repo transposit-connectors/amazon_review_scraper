@@ -17,7 +17,12 @@
       }],
       "javascriptAPIVersion": "3",
       "source": "src",
-      "userSettingsDisplay": "GENERATED"
+      "userSettingsDisplay": "GENERATED",
+      "appSettings": [{
+        "name": "url",
+        "description": "Your amazon review start url. This should be the one you find after clicking \"See all X reviews\" and contain \"/product-reviews/\" in the url.",
+        "type": "STRING"
+      }]
     }
   }
 }
