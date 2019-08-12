@@ -56,8 +56,7 @@
         "ref": "google_sheets.raw",
         "requireConsumerSignin": true
       }, {
-        "ref": "apify_v2.raw",
-        "requireConsumerSignin": true
+        "ref": "apify_v2.raw"
       }],
       "javascriptAPIVersion": "3",
       "source": "src",
