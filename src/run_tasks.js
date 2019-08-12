@@ -1,10 +1,10 @@
 (params) => {
   let newSheet = api.run("this.create_sheet", {name: `Reviews ${env.get("url")}`});
-  api.run("this.scrape_reviews", { url: env.get("url") });
+  //api.run("this.scrape_reviews", { url: env.get("url") });
   let reviews = api.run("this.get_reviews");
   for (let i = 0; i < reviews.length; i++){
       api.run("this.sheets_copy", {
-        							sheetId: newSheet.spreadsheetId,
+        							sheetId: newSheet[0].spreadsheetId,
         							rating: reviews[i].rating,
         							title: reviews[i].title,
         							content: reviews[i].content,
@@ -12,7 +12,7 @@
         							date: reviews[i].date,
       							  });
   }
-  return newSheet.spreadsheetUrl;
+  return newSheet[0].spreadsheetUrl;
 }
 
 /*
