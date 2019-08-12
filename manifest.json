@@ -27,10 +27,6 @@
         "id": "run_tasks",
         "function": {
           "js": "run_tasks.js"
-        },
-        "access": {
-          "requireApiKey": true,
-          "requireUser": true
         }
       }, {
         "id": "sheets_copy",
