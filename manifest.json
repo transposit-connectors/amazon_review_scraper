@@ -55,6 +55,9 @@
       "dataConnections": [{
         "ref": "google_sheets.raw",
         "requireConsumerSignin": true
+      }, {
+        "ref": "apify_v2.raw",
+        "requireConsumerSignin": true
       }],
       "javascriptAPIVersion": "3",
       "source": "src",
