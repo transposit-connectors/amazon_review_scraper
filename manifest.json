@@ -10,11 +10,13 @@
       }],
       "operations": [{
         "id": "get_reviews",
+        "description": "Returns the list of scraped reviews from Apify",
         "tql": {
           "tql": "SELECT rating, title, content, author, date FROM apify_v2.get_items_in_task_last_run_dataset\n  WHERE actorTaskId=\"wbW84AN7b8AtEFtEZ\"\n  AND status='SUCCEEDED'\n  "
         }
       }, {
         "id": "scrape_reviews",
+        "description": "Scrapes the amazon reviews from a given url in environment variables",
         "tql": {
           "parameters": [{
             "name": "url",
@@ -24,32 +26,34 @@
           "tql": "SELECT * FROM apify_v2.sync_run_task_with_input\n  WHERE actorTaskId=\"wbW84AN7b8AtEFtEZ\"\n  AND $body=(SELECT {\n  \"startUrls\": [\n    {\n      \"url\": @url\t\t-- Enter this in environment variables.\n    }\n  ]\n})\n"
         }
       }, {
-        "id": "run_tasks",
-        "function": {
-          "js": "run_tasks.js"
-        }
-      }, {
-        "id": "sheets_copy",
-        "tql": {
-          "parameters": [{
-            "name": "values",
-            "type": "STRING"
-          }, {
-            "name": "sheetId",
-            "description": "the id of the google sheet",
-            "type": "STRING"
-          }],
-          "tql": "SELECT * FROM google_sheets.append_sheet_values\n  WHERE valueInputOption='RAW'\n  AND range='Sheet1'\n  AND spreadsheetId=@sheetId\n  AND $body=(SELECT {\n    'values' : [ [@rating, @title, @content, @author, @date ] ],\n    'range' : 'Sheet1'\n  })\n"
-        }
-      }, {
         "id": "create_sheet",
+        "description": "Creates a fresh google sheet to store the scraped reviews",
         "tql": {
           "parameters": [{
             "name": "name",
             "description": "The name of the spreadsheet",
             "type": "STRING"
           }],
-          "tql": "SELECT spreadsheetId, spreadsheetUrl FROM google_sheets.create_sheet\n  WHERE $body.properties.title=@name\n\n/*\n * For sample code and reference material, visit\n * https://www.transposit.com/docs/get-started/sql-quickstart\n */"
+          "tql": "SELECT spreadsheetId, spreadsheetUrl FROM google_sheets.create_sheet\n  WHERE $body.properties.title=@name\n"
+        }
+      }, {
+        "id": "sheets_copy",
+        "tql": {
+          "parameters": [{
+            "name": "sheetId",
+            "description": "The google sheet id",
+            "type": "STRING"
+          }, {
+            "name": "values",
+            "description": "The review data",
+            "type": "STRING"
+          }],
+          "tql": "SELECT * FROM google_sheets.update_sheet_values_in_batch\n  WHERE spreadsheetId=@sheetId\n  AND $body=(SELECT {\n    'data' : [{\n    \t'values' : @values,\n        'range' : 'Sheet1'\n    }]\n  })\n\n/*\n * For sample code and reference material, visit\n * https://www.transposit.com/docs/get-started/sql-quickstart\n */"
+        }
+      }, {
+        "id": "Amazon Reviews RUN ME",
+        "function": {
+          "js": "run_tasks.js"
         }
       }],
       "dataConnections": [{
