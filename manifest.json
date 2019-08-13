@@ -71,6 +71,8 @@
         "description": "Your amazon review start url. This should be the one you find after clicking \"See all X reviews\" and contain \"/product-reviews/\" in the url.",
         "type": "STRING"
       }]
-    }
+    },
+    "description": "An app that scrapes Amazon reviews with Apify to Google Sheets.",
+    "displayName": "Amazon Review Scraper"
   }
 }
