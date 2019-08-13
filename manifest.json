@@ -46,12 +46,13 @@
           }, {
             "name": "values",
             "description": "The review data",
-            "type": "STRING"
+            "type": "ARRAY",
+            "required": true
           }],
-          "tql": "SELECT * FROM google_sheets.update_sheet_values_in_batch\n  WHERE spreadsheetId=@sheetId\n  AND $body=(SELECT {\n    'data' : [{\n    \t'values' : @values,\n        'range' : 'Sheet1'\n    }]\n  })\n\n/*\n * For sample code and reference material, visit\n * https://www.transposit.com/docs/get-started/sql-quickstart\n */"
+          "tql": "SELECT * FROM google_sheets.update_sheet_values_in_batch\n  WHERE spreadsheetId=@sheetId\n  AND $body=(SELECT {\n    'valueInputOption': \"USER_ENTERED\",\n    'data' : [{\n    \t'values' : @values,\n        'range' : 'Sheet1'\n    }]\n  })\n\n/*\n * For sample code and reference material, visit\n * https://www.transposit.com/docs/get-started/sql-quickstart\n */"
         }
       }, {
-        "id": "Amazon Reviews RUN ME",
+        "id": "Amazon Reviews",
         "function": {
           "js": "run_tasks.js"
         }
