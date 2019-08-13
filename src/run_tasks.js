@@ -9,8 +9,3 @@
   //api.run('this.sheets_copy', {sheetId: newSheet[0].spreadsheetUrl, values: values});
   return newSheet[0].spreadsheetUrl;
 }
-
-/*
- * For sample code and reference material, visit
- * https://www.transposit.com/docs/references/js-operations
- */
