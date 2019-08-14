@@ -18,4 +18,6 @@ This bot uses a custom scraper made in Apify that will scrape an Amazon product'
 
 This is an example of a Apify Scraper to grab data from a source and pass it onto another platform (Google Sheets). Transposit allows you to parse your scraped data into many different platforms, so that you can spend less time inputting.
 
+Additionally, this will start a fresh scrape every time you call the function. If you modify your scraper and operations, you could make this only scrape new reviews and append them to a document.
+
 [Click here to find more examples using Transposit!](https://www.transposit.com/apps/)
