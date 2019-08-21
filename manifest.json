@@ -60,7 +60,8 @@
         }
       }],
       "dataConnections": [{
-        "ref": "google_sheets.raw"
+        "ref": "google_sheets.raw",
+        "requireConsumerSignin": true
       }, {
         "ref": "apify_v2.raw"
       }],
