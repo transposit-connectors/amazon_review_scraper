@@ -16,10 +16,6 @@ This bot uses a custom scraper made in Apify that will scrape an Amazon product'
 
 `Amazon Scrape`: The function to run to run the app. Returns the url of the Google sheet it made for you.
 
-`create_sheet`: A call to create a new Google Sheet with the product url in the title.
-
-`get_reviews`: Returns the dataset of the Apify scraper.
-
 `scrape_reviews`: Calls the Apify scraper to scrape the given url.
 
 `sheets_copy`: Copies the scraped data into a Google Sheet.
