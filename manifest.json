@@ -9,12 +9,6 @@
         "alias": "google_sheets"
       }],
       "operations": [{
-        "id": "get_reviews",
-        "description": "Returns the list of scraped reviews from Apify",
-        "tql": {
-          "tql": "SELECT rating, title, content, author, date FROM apify_v2.get_items_in_task_last_run_dataset\n  WHERE actorTaskId=\"wbW84AN7b8AtEFtEZ\"\n  AND status='SUCCEEDED'\n  "
-        }
-      }, {
         "id": "scrape_reviews",
         "description": "Scrapes the amazon reviews from a given url in environment variables",
         "tql": {
@@ -24,17 +18,6 @@
             "type": "STRING"
           }],
           "tql": "SELECT * FROM apify_v2.sync_run_task_with_input\n  WHERE actorTaskId=\"wbW84AN7b8AtEFtEZ\"\n  AND $body=(SELECT {\n  \"startUrls\": [\n    {\n      \"url\": @url\t\t-- Enter this in environment variables.\n    }\n  ]\n})\n"
-        }
-      }, {
-        "id": "create_sheet",
-        "description": "Creates a fresh google sheet to store the scraped reviews",
-        "tql": {
-          "parameters": [{
-            "name": "name",
-            "description": "The name of the spreadsheet",
-            "type": "STRING"
-          }],
-          "tql": "SELECT spreadsheetId, spreadsheetUrl FROM google_sheets.create_sheet\n  WHERE $body.properties.title=@name\n"
         }
       }, {
         "id": "sheets_copy",
@@ -56,7 +39,8 @@
         "id": "Amazon Scrape",
         "description": "Creates a new sheet to populate the scraped reviews onto and returns the url.",
         "function": {
-          "js": "run_tasks.js"
+          "js": "run_tasks.js",
+          "lang": "js"
         }
       }],
       "dataConnections": [{
