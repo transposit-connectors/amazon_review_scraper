@@ -4,6 +4,7 @@
   	{name: `Reviews for ${env.get("url")}`});
   // Scrape the reviews and get the data
   api.run("this.scrape_reviews", { url: env.get("url") });
+  // Gather the dataset we jsut scraped
   let reviews = api.query('SELECT rating, title, content, author, date FROM apify_v2.get_items_in_task_last_run_dataset WHERE actorTaskId="wbW84AN7b8AtEFtEZ" AND status="SUCCEEDED"');
   // Populate the headers and data into a parsable array
   let values = [["Rating", "Title", "Content", "Author", "Date"]];
